@@ -24,7 +24,7 @@
   "bundle": {
     "active": true,
     "targets": ["msi", "nsis", "dmg", "app"],
-    "icon": ["icons/icon.png"],
+    "icon": ["icons/icon.png", "icons/icon.ico"],
     "resources": {
       "../../../engines/bin": "engines"
     },

@@ -43,8 +43,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # Root rust-toolchain.toml is 1.83 for workspace tests. Desktop needs 1.90 (Tauri 2).
-      - uses: dtolnay/rust-toolchain@1.90.0
+      - uses: dtolnay/rust-toolchain@stable
         with:
+          toolchain: "1.90.0"
           targets: ${{ matrix.rust_target }}
       - name: Override repo 1.83 pin
         working-directory: apps/desktop
@@ -74,26 +75,23 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
-          shopt -s globstar nullglob
+          find apps/desktop/src-tauri/target -type d -name bundle | sed 's|^|bundle dir: |' || true
+          find apps/desktop/src-tauri/target \( -name '*.dmg' -o -name '*.msi' -o -name '*.exe' \) | sed 's|^|found: |' || true
           case "${{ matrix.triple }}" in
             windows-x86_64)
-              for f in apps/desktop/src-tauri/target/**/bundle/msi/*.msi; do
-                cp "$f" dist/WNY-windows.msi
-              done
-              for f in apps/desktop/src-tauri/target/**/bundle/nsis/*.exe; do
-                cp "$f" dist/WNY-windows-setup.exe
-              done
+              find apps/desktop/src-tauri/target -path '*/bundle/msi/*.msi' -exec cp {} dist/WNY-windows.msi \;
+              find apps/desktop/src-tauri/target -path '*/bundle/nsis/*.exe' -exec cp {} dist/WNY-windows-setup.exe \;
               ;;
             darwin-aarch64)
-              for f in apps/desktop/src-tauri/target/**/bundle/dmg/*.dmg; do
-                cp "$f" dist/WNY-macos.dmg
-                cp "$f" dist/WNY-macos-arm64.dmg
-              done
+              dmg="$(find apps/desktop/src-tauri/target -path '*/bundle/dmg/*.dmg' | head -1)"
+              test -n "$dmg"
+              cp "$dmg" dist/WNY-macos.dmg
+              cp "$dmg" dist/WNY-macos-arm64.dmg
               ;;
             darwin-x86_64)
-              for f in apps/desktop/src-tauri/target/**/bundle/dmg/*.dmg; do
-                cp "$f" dist/WNY-macos-x86_64.dmg
-              done
+              dmg="$(find apps/desktop/src-tauri/target -path '*/bundle/dmg/*.dmg' | head -1)"
+              test -n "$dmg"
+              cp "$dmg" dist/WNY-macos-x86_64.dmg
               ;;
           esac
           ls -la dist

@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "comment": "Pinned upstream artifacts. Hashes are filled by scripts/fetch-engines.sh. Runtime refuses a binary whose sha256 is missing or mismatched.",
+  "engines": [
+    {
+      "id": "dnscrypt-proxy",
+      "slot": "names",
+      "upstream": "https://github.com/DNSCrypt/dnscrypt-proxy",
+      "version": "2.1.8",
+      "artifacts": {
+        "windows-x86_64": { "url": "https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.1.8/dnscrypt-proxy-win64-2.1.8.zip", "sha256": "" },
+        "darwin-aarch64": { "url": "https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.1.8/dnscrypt-proxy-macos_arm64-2.1.8.zip", "sha256": "" },
+        "darwin-x86_64": { "url": "https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.1.8/dnscrypt-proxy-macos-2.1.8.zip", "sha256": "" },
+        "linux-x86_64": { "url": "https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.1.8/dnscrypt-proxy-linux_x86_64-2.1.8.tar.gz", "sha256": "" }
+      }
+    },
+    {
+      "id": "goodbyedpi",
+      "slot": "filter",
+      "platforms": ["windows"],
+      "upstream": "https://github.com/ValdikSS/GoodbyeDPI",
+      "version": "0.2.3rc3",
+      "artifacts": {
+        "windows-x86_64": { "url": "https://github.com/ValdikSS/GoodbyeDPI/releases/download/0.2.3rc3/goodbyedpi-0.2.3rc3.zip", "sha256": "" }
+      }
+    },
+    {
+      "id": "zapret",
+      "slot": "filter",
+      "upstream": "https://github.com/bol-van/zapret",
+      "version": "upstream-master",
+      "artifacts": {
+        "windows-x86_64": { "url": "https://github.com/bol-van/zapret/archive/refs/heads/master.zip", "sha256": "" }
+      }
+    },
+    {
+      "id": "spoofdpi",
+      "slot": "filter",
+      "platforms": ["darwin", "linux"],
+      "upstream": "https://github.com/xvzc/spoofdpi",
+      "version": "1.5.5",
+      "artifacts": {
+        "darwin-aarch64": { "url": "https://github.com/xvzc/spoofdpi/releases/download/v1.5.5/spoofdpi_1.5.5_darwin_arm64.tar.gz", "sha256": "" },
+        "darwin-x86_64": { "url": "https://github.com/xvzc/spoofdpi/releases/download/v1.5.5/spoofdpi_1.5.5_darwin_x86_64.tar.gz", "sha256": "" }
+      }
+    },
+    {
+      "id": "byedpi",
+      "slot": "filter",
+      "upstream": "https://github.com/hufrea/byedpi",
+      "version": "0.17",
+      "artifacts": {
+        "windows-x86_64": { "url": "https://github.com/hufrea/byedpi/releases/download/v0.17/byedpi-17-x86_64-w64.zip", "sha256": "" },
+        "linux-x86_64": { "url": "https://github.com/hufrea/byedpi/releases/download/v0.17/byedpi-17-x86_64.tar.gz", "sha256": "" }
+      }
+    },
+    {
+      "id": "tor",
+      "slot": "road",
+      "upstream": "https://www.torproject.org/download/tor/",
+      "version": "0.4.9.14",
+      "artifacts": {
+        "windows-x86_64": { "url": "https://dist.torproject.org/torbrowser/15.0.25/tor-expert-bundle-windows-x86_64-15.0.25.tar.gz", "sha256": "" },
+        "darwin-aarch64": { "url": "https://dist.torproject.org/torbrowser/15.0.25/tor-expert-bundle-macos-aarch64-15.0.25.tar.gz", "sha256": "" },
+        "darwin-x86_64": { "url": "https://dist.torproject.org/torbrowser/15.0.25/tor-expert-bundle-macos-x86_64-15.0.25.tar.gz", "sha256": "" },
+        "linux-x86_64": { "url": "https://dist.torproject.org/torbrowser/15.0.25/tor-expert-bundle-linux-x86_64-15.0.25.tar.gz", "sha256": "" },
+        "android-aarch64": { "url": "https://dist.torproject.org/torbrowser/15.0.25/tor-expert-bundle-android-aarch64-15.0.25.tar.gz", "sha256": "" }
+      }
+    },
+    {
+      "id": "hev-socks5-tunnel",
+      "slot": "road",
+      "upstream": "https://github.com/heiher/hev-socks5-tunnel",
+      "version": "2.8.1",
+      "artifacts": {
+        "windows-x86_64": { "url": "https://github.com/heiher/hev-socks5-tunnel/releases/latest/download/hev-socks5-tunnel-windows-amd64.exe", "sha256": "" }
+      }
+    },
+    {
+      "id": "psiphon-tunnel-core",
+      "slot": "road",
+      "upstream": "https://github.com/Psiphon-Inc/psiphon-tunnel-core",
+      "version": "official-client",
+      "artifacts": {}
+    },
+    {
+      "id": "lokinet",
+      "slot": "road",
+      "upstream": "https://github.com/oxen-io/lokinet",
+      "version": "upstream",
+      "artifacts": {}
+    }
+  ]
+}

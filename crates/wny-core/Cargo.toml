@@ -1,0 +1,16 @@
+[package]
+name = "wny-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "WNY policy, settings, engine registry, and orchestrator"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sha2.workspace = true
+hex.workspace = true
+ipnet.workspace = true
+directories.workspace = true
+parking_lot.workspace = true

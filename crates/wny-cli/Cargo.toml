@@ -1,0 +1,15 @@
+[package]
+name = "wny-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Headless WNY switch for tests and power users. No extra UI."
+
+[[bin]]
+name = "wny"
+path = "src/main.rs"
+
+[dependencies]
+wny-core.workspace = true
+wny-egress.workspace = true
+serde_json.workspace = true

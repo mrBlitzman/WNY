@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "note": "Source of truth mirrored from ARCHITECTURE.md. Runtime L0 loads this file.",
+  "static_endpoints": [
+    {
+      "id": "quad9-doh",
+      "class": "dns",
+      "hosts": ["dns.quad9.net", "dns10.quad9.net"],
+      "ips": ["9.9.9.9", "149.112.112.112", "2620:fe::fe", "2620:fe::9"],
+      "ports": [443, 853]
+    },
+    {
+      "id": "cloudflare-doh",
+      "class": "dns",
+      "hosts": ["cloudflare-dns.com", "one.one.one.one"],
+      "ips": ["1.1.1.1", "1.0.0.1", "2606:4700:4700::1111", "2606:4700:4700::1001"],
+      "ports": [443, 853]
+    },
+    {
+      "id": "dns-sb-doh",
+      "class": "dns",
+      "hosts": ["doh.dns.sb", "dns.sb", "doh.sb"],
+      "ips": ["185.222.222.222", "45.11.45.11"],
+      "ports": [443, 853]
+    },
+    {
+      "id": "controld-uncensored",
+      "class": "dns",
+      "hosts": ["freedns.controld.com", "uncensored.freedns.controld.com"],
+      "ips": ["76.76.2.5", "76.76.10.5"],
+      "ports": [443, 853]
+    },
+    {
+      "id": "dnsbunker",
+      "class": "dns",
+      "hosts": ["dnsbunker.org"],
+      "ips": [],
+      "ports": [443, 853]
+    },
+    {
+      "id": "odoh-cloudflare",
+      "class": "dns",
+      "hosts": ["odoh.cloudflare-dns.com"],
+      "ips": [],
+      "ports": [443],
+      "modes": ["protection", "unblock", "emergency"]
+    },
+    {
+      "id": "warp-api",
+      "class": "warp",
+      "hosts": ["api.cloudflareclient.com"],
+      "ips": [],
+      "ports": [443]
+    },
+    {
+      "id": "warp-engage",
+      "class": "warp",
+      "hosts": ["engage.cloudflareclient.com"],
+      "ips": ["162.159.192.1", "162.159.193.1"],
+      "cidrs": ["162.159.192.0/24", "162.159.193.0/24", "2606:4700:d0::/48"],
+      "ports": [2408, 500, 1701, 4443]
+    },
+    {
+      "id": "riseup-api",
+      "class": "riseup",
+      "hosts": ["api.black.riseup.net", "api.riseup.net", "black.riseup.net"],
+      "ips": [],
+      "ports": [443]
+    },
+    {
+      "id": "calyx-api",
+      "class": "calyx",
+      "hosts": ["calyx.net", "vpn.calyx.net"],
+      "ips": [],
+      "ports": [443, 4430]
+    }
+  ],
+  "named_classes": [
+    {
+      "id": "tor-authorities",
+      "process": "tor",
+      "description": "Tor directory authorities shipped in the expert bundle"
+    },
+    {
+      "id": "tor-relays",
+      "process": "tor",
+      "description": "Guards, middles, exits from the live consensus"
+    },
+    {
+      "id": "tor-bridges",
+      "process": ["tor", "lyrebird"],
+      "description": "Bundled obfs4, WebTunnel, meek bridges"
+    },
+    {
+      "id": "snowflake",
+      "process": "lyrebird",
+      "description": "Snowflake broker and volunteer WebRTC proxies"
+    },
+    {
+      "id": "psiphon-network",
+      "process": "psiphon-tunnel-core",
+      "description": "Official Psiphon bootstrap and learned servers"
+    },
+    {
+      "id": "lokinet-dht",
+      "process": "lokinet",
+      "description": "Lokinet service nodes and exit.loki"
+    },
+    {
+      "id": "amnezia-free",
+      "process": "amneziawg",
+      "description": "Amnezia Free AmneziaWG endpoints if a headless config exists"
+    }
+  ],
+  "loopback": ["127.0.0.0/8", "::1/128"],
+  "tun_prefixes": ["10.192.0.0/16", "198.18.0.0/15", "fc00::/7"],
+  "forbidden": [
+    "nextdns.io",
+    "dns.mullvad.net",
+    "protonvpn.com",
+    "windscribe.com",
+    "nymvpn.com"
+  ]
+}

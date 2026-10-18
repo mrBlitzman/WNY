@@ -1,0 +1,87 @@
+{
+  "app": "WNY",
+  "tagline": "WholeNineYards — tüm cihaz için tek anahtar",
+  "on": "Açık",
+  "off": "Kapalı",
+  "mode": "Mod",
+  "modes": {
+    "protection": "Koruma",
+    "unblock": "Engel kaldır",
+    "private": "Gizli",
+    "emergency": "Acil"
+  },
+  "modeHelp": {
+    "protection": "İsimleri şifreler ve bu ağın bağlantınızı okumasını engeller.",
+    "unblock": "Siteler açılana kadar önce yerel bypass, sonra tünel, sonra gizli ağ dener.",
+    "private": "Tüm uygulamaları gizli ağdan geçirir. Aramalar ve bazı oyunlar durabilir.",
+    "emergency": "Her yolu dener. Hiçbiri işe yaramazsa sızıntı olmasın diye internet kapalı kalır."
+  },
+  "slots": {
+    "names": "İsimler",
+    "filter": "Filtre",
+    "road": "Yol"
+  },
+  "slotHelp": {
+    "names": "Site isimlerinin nasıl bakıldığı (şifreli).",
+    "filter": "Ağ filtrelerine karşı yerel hile. Adresinizi gizlemez.",
+    "road": "Trafiğin ondan sonra izlediği yol."
+  },
+  "choice": {
+    "auto": "Otomatik",
+    "off": "Kapalı",
+    "pin": "Bunu kullan"
+  },
+  "status": {
+    "idle": "WNY kapalı. Bu ağ sizi görebilir ve filtreleyebilir.",
+    "protecting": "Bu ağda güvendesiniz.",
+    "unblocking": "Bazı siteler kapalı. Başka yol deneniyor…",
+    "private": "Adresiniz gizli. Oturum açtığınız uygulamalar sizi hâlâ tanır.",
+    "mitm": "Bu ağ bağlantınızı okumaya çalıştı. WNY daha güvenli bir yola geçti.",
+    "failClosed": "Bu ağ güvensiz. İnternet durduruldu.",
+    "pinFailed": "Seçiminiz çalışmadı. Değiştirilsin mi?",
+    "missingEngine": "Bu araç bu cihazda yok.",
+    "iosNoFilter": "Telefonda yerel Filtre yok. Yerine Yol kullanılır.",
+    "iosSharedPath": "iPhone’da uygulamalar tek gizli yolu paylaşır.",
+    "captive": "Bu Wi-Fi giriş sayfası istiyor. Birkaç dakika sonra kapanacak."
+  },
+  "wizard": {
+    "next": "İleri",
+    "back": "Geri",
+    "done": "WNY’yi kullan",
+    "language": "Dil",
+    "whatTitle": "WNY ne yapar",
+    "whatBody": "WNY uygulamalarınızın altında durur. Aynı tarayıcı ve sohbeti kullanırsınız. Açıkken isimler şifrelenir, güvensiz bağlantılar kesilir, engelli siteler başka yoldan gidebilir. WNY sunucusuna bir şey gönderilmez. Ayarlar bu cihazda kalır.",
+    "permTitle": "İzin",
+    "permBody": "Windows ve telefonlar buna VPN der. WNY bunu bir şirkete gitmek için değil, tüm uygulamaları birden örtmek için kullanır. Lütfen izin verin.",
+    "bootTitle": "Bilgisayarla başlat",
+    "bootBody": "İsteğe bağlı. Oturum açınca WNY açılsın.",
+    "bootToggle": "Girişte WNY’yi başlat"
+  },
+  "actions": {
+    "captive": "Bu Wi-Fi’ye giriş yap",
+    "newIdentity": "Yeni kimlik",
+    "update": "Güncelleme bak"
+  },
+  "engines": {
+    "quad9": "Quad9",
+    "cloudflare": "Cloudflare",
+    "dns-sb": "DNS.SB",
+    "controld-uncensored": "Control D",
+    "dnsbunker": "DNSBunker",
+    "odoh": "ODoH",
+    "tor-dns": "Gizli DNS",
+    "goodbyedpi": "GoodbyeDPI",
+    "zapret": "zapret",
+    "spoofdpi": "SpoofDPI",
+    "byedpi": "ByeDPI",
+    "warp": "WARP",
+    "riseup": "Riseup",
+    "psiphon": "Psiphon",
+    "tor": "Tor",
+    "tor-snowflake": "Tor · Snowflake",
+    "tor-webtunnel": "Tor · WebTunnel",
+    "tor-obfs4": "Tor · obfs4",
+    "lokinet": "Lokinet",
+    "amnezia-free": "Amnezia Free"
+  }
+}

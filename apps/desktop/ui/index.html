@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WNY</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <section id="wizard" class="panel hidden">
+      <p class="brand">WNY</p>
+      <div id="wiz-body"></div>
+      <div class="row">
+        <button id="wiz-back" class="ghost hidden">Back</button>
+        <button id="wiz-next" class="primary">Next</button>
+      </div>
+    </section>
+
+    <section id="main" class="panel hidden">
+      <header>
+        <div>
+          <h1>WNY</h1>
+          <p id="tagline" class="muted"></p>
+        </div>
+        <select id="lang"></select>
+      </header>
+
+      <button id="power" class="power" aria-pressed="false">
+        <span id="power-label">Off</span>
+      </button>
+
+      <p id="status" class="status"></p>
+
+      <label class="block">
+        <span id="mode-label">Mode</span>
+        <select id="mode"></select>
+      </label>
+      <p id="mode-help" class="muted small"></p>
+
+      <div class="slots" id="slots"></div>
+
+      <div class="actions">
+        <button id="captive" class="ghost"></button>
+        <button id="ident" class="ghost"></button>
+      </div>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

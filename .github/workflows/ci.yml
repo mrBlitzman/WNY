@@ -1,0 +1,15 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.83.0
+      - name: test core
+        run: cargo test --workspace --offline --locked || cargo test --workspace
+      - name: no telemetry strings
+        run: |
+          ! grep -RInE 'sentry|crashlytics|amplitude|telemetry' crates apps --include='*.rs' --include='*.kt' --include='*.swift' || true

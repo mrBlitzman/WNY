@@ -1,0 +1,87 @@
+{
+  "app": "WNY",
+  "tagline": "WholeNineYards — ein Schalter für das ganze Gerät",
+  "on": "Ein",
+  "off": "Aus",
+  "mode": "Modus",
+  "modes": {
+    "protection": "Schutz",
+    "unblock": "Freischalten",
+    "private": "Privat",
+    "emergency": "Notfall"
+  },
+  "modeHelp": {
+    "protection": "Verschlüsselt Namen und hindert dieses Netz, Ihre Verbindung zu lesen.",
+    "unblock": "Versucht lokale Umgehung, dann einen Tunnel, dann ein verborgenes Netz, bis Seiten öffnen.",
+    "private": "Schickt jede App durch ein verborgenes Netz. Anrufe und manche Spiele können pausieren.",
+    "emergency": "Versucht jeden Weg. Wenn nichts geht, bleibt das Internet aus, damit nichts leakt."
+  },
+  "slots": {
+    "names": "Namen",
+    "filter": "Filter",
+    "road": "Weg"
+  },
+  "slotHelp": {
+    "names": "Wie Website-Namen nachgeschlagen werden (verschlüsselt).",
+    "filter": "Lokaler Trick gegen Netzfilter. Versteckt Ihre Adresse nicht.",
+    "road": "Der Weg, den der Verkehr danach nimmt."
+  },
+  "choice": {
+    "auto": "Auto",
+    "off": "Aus",
+    "pin": "Diesen nutzen"
+  },
+  "status": {
+    "idle": "WNY ist aus. Dieses Netz kann Sie sehen und filtern.",
+    "protecting": "In diesem Netz sicher.",
+    "unblocking": "Einige Seiten waren blockiert. Anderer Weg wird versucht…",
+    "private": "Ihre Adresse ist verborgen. Angemeldete Apps kennen Sie trotzdem.",
+    "mitm": "Dieses Netz wollte Ihre Verbindung lesen. WNY wechselte auf einen sichereren Weg.",
+    "failClosed": "Dieses Netz ist unsicher. Internet pausiert.",
+    "pinFailed": "Ihre Wahl ist fehlgeschlagen. Wechseln?",
+    "missingEngine": "Dieses Werkzeug ist auf diesem Gerät nicht installiert.",
+    "iosNoFilter": "Telefone können keinen lokalen Filter. Stattdessen wird der Weg genutzt.",
+    "iosSharedPath": "Auf dem iPhone teilen Apps einen verborgenen Weg.",
+    "captive": "Dieses WLAN braucht eine Anmeldeseite. Sie schließt in wenigen Minuten."
+  },
+  "wizard": {
+    "next": "Weiter",
+    "back": "Zurück",
+    "done": "WNY nutzen",
+    "language": "Sprache",
+    "whatTitle": "Was WNY tut",
+    "whatBody": "WNY sitzt unter Ihren Apps. Sie nutzen denselben Browser und Chat. Wenn es an ist, sind Namen verschlüsselt, unsichere Verbindungen gesperrt, und blockierte Seiten können einen anderen Weg nehmen. Nichts geht an einen WNY-Server. Einstellungen bleiben auf diesem Gerät.",
+    "permTitle": "Erlaubnis",
+    "permBody": "Windows und Telefone nennen das VPN. WNY nutzt es, um alle Apps auf einmal zu schützen — nicht um Sie zu einem Firmen-VPN zu schicken. Bitte erlauben.",
+    "bootTitle": "Mit dem Computer starten",
+    "bootBody": "Optional. WNY kann sich anmelden, wenn Sie sich anmelden.",
+    "bootToggle": "WNY bei der Anmeldung starten"
+  },
+  "actions": {
+    "captive": "Bei diesem WLAN anmelden",
+    "newIdentity": "Neue Identität",
+    "update": "Nach Updates suchen"
+  },
+  "engines": {
+    "quad9": "Quad9",
+    "cloudflare": "Cloudflare",
+    "dns-sb": "DNS.SB",
+    "controld-uncensored": "Control D",
+    "dnsbunker": "DNSBunker",
+    "odoh": "ODoH",
+    "tor-dns": "Verborgenes DNS",
+    "goodbyedpi": "GoodbyeDPI",
+    "zapret": "zapret",
+    "spoofdpi": "SpoofDPI",
+    "byedpi": "ByeDPI",
+    "warp": "WARP",
+    "riseup": "Riseup",
+    "psiphon": "Psiphon",
+    "tor": "Tor",
+    "tor-snowflake": "Tor · Snowflake",
+    "tor-webtunnel": "Tor · WebTunnel",
+    "tor-obfs4": "Tor · obfs4",
+    "lokinet": "Lokinet",
+    "amnezia-free": "Amnezia Free"
+  }
+}

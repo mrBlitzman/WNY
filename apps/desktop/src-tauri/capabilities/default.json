@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "WNY window. No network permission for the UI itself.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

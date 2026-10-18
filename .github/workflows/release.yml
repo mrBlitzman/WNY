@@ -42,9 +42,13 @@ jobs:
     runs-on: ${{ matrix.host }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      # Root rust-toolchain.toml is 1.83 for workspace tests. Desktop needs 1.90 (Tauri 2).
+      - uses: dtolnay/rust-toolchain@1.90.0
         with:
           targets: ${{ matrix.rust_target }}
+      - name: Override repo 1.83 pin
+        working-directory: apps/desktop
+        run: rustup override set 1.90.0
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -102,17 +106,21 @@ jobs:
 
   android:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-      - uses: android-actions/setup-android@v3
       - name: Android SDK packages
         run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+          SDKMANAGER="$(ls -1 "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | tail -1)"
+          echo "sdkmanager=$SDKMANAGER"
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null || true
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" "platforms;android-35" "build-tools;35.0.0"
       - name: Assemble unsigned (debug-signed) APK
         working-directory: apps/android
         run: |

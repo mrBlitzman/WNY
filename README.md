@@ -8,28 +8,31 @@ When WNY is **on**, unencrypted packets are not allowed out. WNY talks only to t
 
 ## Install
 
+Packages are **unsigned**. Windows SmartScreen and macOS Gatekeeper will warn until a signing certificate is added. That is expected.
+
 ### Windows
 
-1. Download `WNY-windows.msi` from [Releases](../../releases).
-2. Run the installer. Allow the VPN / driver prompt when asked.
-3. Choose language (English, Türkçe, Deutsch).
-4. Flip the switch.
+1. Download `WNY-windows.msi` (or `WNY-windows-setup.exe`) from [Releases](../../releases).
+2. If SmartScreen appears: More info → Run anyway.
+3. Allow the VPN / driver prompt when asked.
+4. Choose language (English, Türkçe, Deutsch) and flip the switch.
 
 ### macOS
 
-1. Download `WNY-macos.dmg`.
-2. Drag WNY to Applications. Grant VPN / network filter when macOS asks.
-3. Flip the switch.
+1. Download `WNY-macos.dmg` (Apple Silicon) or `WNY-macos-x86_64.dmg` (Intel).
+2. Drag WNY to Applications. First launch: right-click → Open (Gatekeeper).
+3. Grant VPN / network filter when macOS asks, then flip the switch.
 
 ### Android
 
-1. Install the APK from Releases (Play is optional later).
-2. Accept the VPN permission. Enable always-on / Block connections without VPN when WNY offers it.
-3. Flip the switch.
+1. Download `WNY-android-unsigned.apk` (debug-signed for sideload, not Play).
+2. Enable Install unknown apps, then open the APK.
+3. Accept the VPN permission. Enable always-on / Block connections without VPN when WNY offers it.
+4. Flip the switch.
 
 ### iOS
 
-1. Install WNY from the App Store or a signed build.
+1. Install WNY from the App Store or a signed build. An unsigned IPA cannot be installed.
 2. Allow adding a VPN configuration. iOS cannot do local DPI; Unblock uses a tunnel, Private uses Tor inside WNY.
 3. Flip the switch.
 
@@ -52,8 +55,9 @@ Requirements: Rust 1.83+, Node 22+ (desktop), Android SDK (Android), Xcode (iOS)
 # policy + core tests (any OS)
 cargo test --workspace --exclude wny-desktop
 
-# optional: fetch pinned engine binaries (maintainer)
+# optional: fetch + stage pinned engine binaries (maintainer / CI)
 ./scripts/fetch-engines.sh
+./scripts/stage-engines.sh linux-x86_64   # or windows-x86_64 / darwin-aarch64 / …
 
 # desktop (Linux/macOS/Windows)
 cd apps/desktop && npm install && npm run tauri build

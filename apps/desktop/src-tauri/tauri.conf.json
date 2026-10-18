@@ -25,13 +25,17 @@
     "active": true,
     "targets": ["msi", "nsis", "dmg", "app"],
     "icon": ["icons/icon.png"],
+    "resources": {
+      "../../../engines/bin": "engines"
+    },
     "windows": {
       "nsis": {
         "installMode": "currentUser"
       }
     },
     "macOS": {
-      "minimumSystemVersion": "12.0"
+      "minimumSystemVersion": "12.0",
+      "signingIdentity": "-"
     }
   }
 }

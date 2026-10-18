@@ -5,7 +5,7 @@
 ```
 cd apps/android
 # open in Android Studio or:
-./gradlew :app:assembleDebug   # add the Gradle wrapper on a machine with Android SDK
+./gradlew :app:assembleRelease   # debug-signed APK at app/build/outputs/apk/release/
 ```
 
 Enable **Block connections without VPN** when WNY asks. That is the kill-switch.

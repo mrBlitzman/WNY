@@ -16,6 +16,8 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            // Debug-signed so the APK sideloads. Not a publisher / Play signature.
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -30,5 +32,4 @@ dependencies {
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("org.json:json:20240303")
 }

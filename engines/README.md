@@ -1,7 +1,8 @@
 # Bundled engines
 
 This folder is empty in git. `scripts/fetch-engines.sh` fills `engines/cache/`.
-Release builds copy the verified binaries into `engines/bin/` beside the WNY executable.
+`scripts/stage-engines.sh <triple>` copies the headless binaries into `engines/bin/`.
+Release installers bundle that directory next to the WNY executable (`WNY_ENGINES_DIR`).
 
 Headless only — never start the upstream GUI:
 

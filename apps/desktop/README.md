@@ -5,7 +5,8 @@ Same Tauri shell on both. Filter engines differ:
 - Windows: GoodbyeDPI → zapret `winws` → ByeDPI
 - macOS: SpoofDPI → zapret `tpws` → ByeDPI
 
-Neither launches an upstream window. Place verified binaries in `engines/bin/` next to the app (see `/engines/README.md`).
+Neither launches an upstream window. Release builds bundle `engines/bin/` via Tauri resources.
+For a local build: `./scripts/stage-engines.sh <triple>` then `npm run tauri build`.
 
 Requires **Rust 1.90+** (Tauri 2). This crate is excluded from the workspace so `cargo test` still runs on 1.83 CI.
 

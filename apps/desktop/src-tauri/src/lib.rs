@@ -83,18 +83,12 @@ fn captive(state: tauri::State<Arc<AppState>>) -> Result<UiSnapshot, String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    std::env::set_var("WNY_DEV", std::env::var("WNY_DEV").unwrap_or_else(|_| "1".into()));
-    let orch = Orchestrator::open_default().expect("orchestrator");
-    let mode = orch.snapshot().mode;
-    let m = Mode::parse(&mode).unwrap_or(Mode::Protection);
-    let guard = PlatformGuard::new(m).expect("egress");
-    let state = Arc::new(AppState {
-        orch: Mutex::new(orch),
-        guard: Mutex::new(guard),
-    });
+    #[cfg(debug_assertions)]
+    if std::env::var_os("WNY_DEV").is_none() {
+        std::env::set_var("WNY_DEV", "1");
+    }
 
     tauri::Builder::default()
-        .manage(state)
         .invoke_handler(tauri::generate_handler![
             snapshot,
             set_on,
@@ -106,11 +100,20 @@ pub fn run() {
             captive
         ])
         .setup(|app| {
-            #[cfg(desktop)]
-            {
-                let _ = app;
-                // Tray is the daily switch. No other vendor UI is launched.
+            if let Ok(dir) = app.path().resource_dir() {
+                let engines = dir.join("engines");
+                if engines.is_dir() {
+                    std::env::set_var("WNY_ENGINES_DIR", &engines);
+                }
             }
+            let orch = Orchestrator::open_default().map_err(|e| e.to_string())?;
+            let mode = orch.snapshot().mode;
+            let m = Mode::parse(&mode).unwrap_or(Mode::Protection);
+            let guard = PlatformGuard::new(m).map_err(|e| e.to_string())?;
+            app.manage(Arc::new(AppState {
+                orch: Mutex::new(orch),
+                guard: Mutex::new(guard),
+            }));
             Ok(())
         })
         .run(tauri::generate_context!())

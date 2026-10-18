@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "modes": {
+    "protection": {
+      "names": { "choice": "auto", "order": ["quad9", "cloudflare", "dns-sb", "controld-uncensored", "dnsbunker"] },
+      "filter": { "choice": "off" },
+      "road": { "choice": "off", "on_mitm": ["warp"] }
+    },
+    "unblock": {
+      "names": { "choice": "auto", "order": ["quad9", "cloudflare", "dns-sb"] },
+      "filter": { "choice": "auto", "order": ["goodbyedpi", "zapret", "spoofdpi", "byedpi"] },
+      "road": { "choice": "auto", "order": ["warp", "riseup", "psiphon", "tor", "tor-snowflake", "tor-webtunnel", "lokinet"] }
+    },
+    "private": {
+      "names": { "choice": "auto", "order": ["tor-dns"] },
+      "filter": { "choice": "auto", "only_if_road_bootstrap_fails": true, "order": ["goodbyedpi", "zapret", "spoofdpi", "byedpi"] },
+      "road": { "choice": "auto", "order": ["tor", "tor-snowflake", "tor-webtunnel", "tor-obfs4", "lokinet"], "fail": "closed" }
+    },
+    "emergency": {
+      "names": { "choice": "auto", "order": ["quad9", "cloudflare", "dns-sb", "controld-uncensored"] },
+      "filter": { "choice": "auto", "order": ["goodbyedpi", "zapret", "spoofdpi", "byedpi"] },
+      "road": { "choice": "auto", "order": ["warp", "riseup", "psiphon", "tor", "tor-snowflake", "tor-webtunnel", "lokinet"], "fail": "closed" }
+    }
+  },
+  "probes": {
+    "dns": ["wikipedia.org", "quad9.net"],
+    "tls_issuers": ["github.com", "cloudflare.com"],
+    "connectivity": ["https://www.wikipedia.org/", "https://www.bbc.com/"],
+    "jitter_ms": [400, 2200]
+  },
+  "captive_portal_secs": 300,
+  "plaintext_drop": {
+    "tcp_ports": [80, 53],
+    "udp_ports": [53, 5353, 5355, 137, 138, 1900, 3478, 19302],
+    "private_also_drop_udp_443": true
+  }
+}

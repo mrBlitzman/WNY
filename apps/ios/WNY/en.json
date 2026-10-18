@@ -1,0 +1,87 @@
+{
+  "app": "WNY",
+  "tagline": "WholeNineYards — one switch for the whole device",
+  "on": "On",
+  "off": "Off",
+  "mode": "Mode",
+  "modes": {
+    "protection": "Protection",
+    "unblock": "Unblock",
+    "private": "Private",
+    "emergency": "Emergency"
+  },
+  "modeHelp": {
+    "protection": "Encrypts names and blocks this network from reading your connection.",
+    "unblock": "Tries a local bypass, then a tunnel, then a hidden network, until sites open.",
+    "private": "Sends every app through a hidden network. Calls and some games may pause.",
+    "emergency": "Tries every path. If nothing works, internet stays off so nothing leaks."
+  },
+  "slots": {
+    "names": "Names",
+    "filter": "Filter",
+    "road": "Road"
+  },
+  "slotHelp": {
+    "names": "How website names are looked up (encrypted).",
+    "filter": "Local trick against network filters. Does not hide your address.",
+    "road": "The path your traffic takes after that."
+  },
+  "choice": {
+    "auto": "Auto",
+    "off": "Off",
+    "pin": "Use this"
+  },
+  "status": {
+    "idle": "WNY is off. This network can see and filter you.",
+    "protecting": "Safe on this network.",
+    "unblocking": "Some sites were blocked. Trying another path…",
+    "private": "Your address is hidden. Apps you are signed into still know you.",
+    "mitm": "This network tried to read your connection. WNY switched to a safer path.",
+    "failClosed": "This network is unsafe. Internet paused.",
+    "pinFailed": "Your choice failed. Switch?",
+    "missingEngine": "This tool is not installed on this device.",
+    "iosNoFilter": "Phones cannot use local Filter. Road is used instead.",
+    "iosSharedPath": "On iPhone, apps share one hidden path.",
+    "captive": "This Wi-Fi needs a sign-in page. It will close in a few minutes."
+  },
+  "wizard": {
+    "next": "Next",
+    "back": "Back",
+    "done": "Start using WNY",
+    "language": "Language",
+    "whatTitle": "What WNY does",
+    "whatBody": "WNY sits under your apps. You keep using the same browser and chat. When it is on, names are encrypted, unsafe connections are blocked, and blocked sites can take another path. Nothing is sent to a WNY server. Settings stay on this device.",
+    "permTitle": "Permission",
+    "permBody": "Windows and phones call this a VPN. WNY uses it to cover every app at once — not to send you to a company VPN. Please allow it.",
+    "bootTitle": "Start with the computer",
+    "bootBody": "Optional. WNY can turn on when you log in.",
+    "bootToggle": "Start WNY at login"
+  },
+  "actions": {
+    "captive": "Sign into this Wi-Fi",
+    "newIdentity": "New identity",
+    "update": "Check for updates"
+  },
+  "engines": {
+    "quad9": "Quad9",
+    "cloudflare": "Cloudflare",
+    "dns-sb": "DNS.SB",
+    "controld-uncensored": "Control D",
+    "dnsbunker": "DNSBunker",
+    "odoh": "ODoH",
+    "tor-dns": "Hidden DNS",
+    "goodbyedpi": "GoodbyeDPI",
+    "zapret": "zapret",
+    "spoofdpi": "SpoofDPI",
+    "byedpi": "ByeDPI",
+    "warp": "WARP",
+    "riseup": "Riseup",
+    "psiphon": "Psiphon",
+    "tor": "Tor",
+    "tor-snowflake": "Tor · Snowflake",
+    "tor-webtunnel": "Tor · WebTunnel",
+    "tor-obfs4": "Tor · obfs4",
+    "lokinet": "Lokinet",
+    "amnezia-free": "Amnezia Free"
+  }
+}

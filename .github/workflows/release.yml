@@ -1,0 +1,197 @@
+name: release
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to publish (created on this SHA if missing)
+        required: true
+        default: v0.1.0-unsigned
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+
+jobs:
+  desktop:
+    name: desktop-${{ matrix.triple }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: windows-latest
+            triple: windows-x86_64
+            rust_target: ""
+            tauri_args: ""
+          - host: macos-latest
+            triple: darwin-aarch64
+            rust_target: ""
+            tauri_args: ""
+          - host: macos-latest
+            triple: darwin-x86_64
+            rust_target: x86_64-apple-darwin
+            tauri_args: "--target x86_64-apple-darwin"
+    runs-on: ${{ matrix.host }}
+    steps:
+      - uses: actions/checkout@v4
+      # Root rust-toolchain.toml is 1.83 for workspace tests. Desktop needs 1.90 (Tauri 2).
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.90.0"
+          targets: ${{ matrix.rust_target }}
+      - name: Override repo 1.83 pin
+        working-directory: apps/desktop
+        run: rustup override set 1.90.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Stage engines
+        shell: bash
+        run: |
+          chmod +x scripts/stage-engines.sh
+          ./scripts/stage-engines.sh "${{ matrix.triple }}"
+      - name: Install desktop deps
+        working-directory: apps/desktop
+        run: npm install
+      - name: Build unsigned installer
+        working-directory: apps/desktop
+        shell: bash
+        env:
+          # Ad-hoc / unsigned. SmartScreen and Gatekeeper will warn.
+          TAURI_SKIP_NOTARIZATION: "true"
+        run: npx tauri build ${{ matrix.tauri_args }}
+      - name: Collect artifacts
+        shell: bash
+        run: |
+          mkdir -p dist
+          find apps/desktop/src-tauri/target -type d -name bundle | sed 's|^|bundle dir: |' || true
+          find apps/desktop/src-tauri/target \( -name '*.dmg' -o -name '*.msi' -o -name '*.exe' \) | sed 's|^|found: |' || true
+          case "${{ matrix.triple }}" in
+            windows-x86_64)
+              find apps/desktop/src-tauri/target -path '*/bundle/msi/*.msi' -exec cp {} dist/WNY-windows.msi \;
+              find apps/desktop/src-tauri/target -path '*/bundle/nsis/*.exe' -exec cp {} dist/WNY-windows-setup.exe \;
+              ;;
+            darwin-aarch64)
+              dmg="$(find apps/desktop/src-tauri/target -path '*/bundle/dmg/*.dmg' | head -1)"
+              test -n "$dmg"
+              cp "$dmg" dist/WNY-macos.dmg
+              cp "$dmg" dist/WNY-macos-arm64.dmg
+              ;;
+            darwin-x86_64)
+              dmg="$(find apps/desktop/src-tauri/target -path '*/bundle/dmg/*.dmg' | head -1)"
+              test -n "$dmg"
+              cp "$dmg" dist/WNY-macos-x86_64.dmg
+              ;;
+          esac
+          ls -la dist
+          test -n "$(ls -A dist)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.triple }}
+          path: dist/*
+          if-no-files-found: error
+
+  android:
+    runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Android SDK packages
+        run: |
+          SDKMANAGER="$(ls -1 "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | tail -1)"
+          echo "sdkmanager=$SDKMANAGER"
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses >/dev/null || true
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" "platforms;android-35" "build-tools;35.0.0"
+      - name: Assemble unsigned (debug-signed) APK
+        working-directory: apps/android
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleRelease --no-daemon
+          mkdir -p dist
+          cp app/build/outputs/apk/release/*.apk dist/WNY-android-unsigned.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: apps/android/dist/WNY-android-unsigned.apk
+          if-no-files-found: error
+
+  linux-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.83.0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Stage engines
+        run: |
+          chmod +x scripts/stage-engines.sh
+          ./scripts/stage-engines.sh linux-x86_64
+      - name: Build CLI
+        run: cargo build --release -p wny-cli
+      - name: Collect
+        run: |
+          mkdir -p dist
+          cp target/release/wny dist/wny-linux-x86_64
+          tar -C engines -czf dist/wny-linux-engines.tar.gz bin
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-cli
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: [desktop, android, linux-cli]
+    if: ${{ !cancelled() && (needs.desktop.result == 'success' || needs.android.result == 'success' || needs.linux-cli.result == 'success') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: List
+        run: find artifacts -type f | sort
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: WNY ${{ env.RELEASE_TAG }}
+          prerelease: true
+          generate_release_notes: false
+          fail_on_unmatched_files: false
+          files: artifacts/*
+          body: |
+            Unsigned packages. Windows SmartScreen and macOS Gatekeeper will warn — that is expected until a code-signing certificate is added.
+
+            | File | Platform |
+            | --- | --- |
+            | `WNY-windows.msi` / `WNY-windows-setup.exe` | Windows 10/11 x64 |
+            | `WNY-macos.dmg` | macOS 12+ Apple Silicon |
+            | `WNY-macos-x86_64.dmg` | macOS 12+ Intel |
+            | `WNY-android-unsigned.apk` | Android 8+ (debug-signed for sideload, not Play) |
+            | `wny-linux-x86_64` | Linux CLI |
+
+            iOS is not in this drop: an unsigned IPA cannot be installed without a signing certificate.
+
+            **Windows:** run the MSI. If SmartScreen appears, More info → Run anyway. Allow the VPN / driver prompt.
+            **macOS:** drag to Applications, then right-click → Open the first time (Gatekeeper).
+            **Android:** enable Install unknown apps, then open the APK.
+
+            These builds are not notarized or Play-signed. Settings stay on the device.
